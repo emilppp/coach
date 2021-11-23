@@ -12,13 +12,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 
-@RequiredArgsConstructor
 @RestController
 @RequestMapping(value = "/kafka")
 public class Controller {
 
-    @Autowired
     private final TopicProducer topicProducer;
+
+    public Controller(TopicProducer topicProducer) {
+        this.topicProducer = topicProducer;
+    }
 
     @PostMapping(value = "/send")
     public void send(@RequestBody Round round) {

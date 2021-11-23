@@ -3,6 +3,7 @@ package com.emilpersson.coachbackend.config;
 import com.emilpersson.coachbackend.model.Round;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.annotation.EnableKafka;
@@ -17,8 +18,13 @@ import java.util.Map;
 @EnableKafka
 public class KafkaConsumerConfig {
 
+    @Value("${topic.name.consumer}")
+    private String topic;
+    @Value("${bootstrap.servers.config}")
+    private String bootstrap;
+
     @Bean
-    public ConsumerFactory<String, Round> consumerFactory(){
+    public ConsumerFactory<String, Round> consumerFactory() {
         JsonDeserializer<Round> deserializer = new JsonDeserializer<>(Round.class);
         deserializer.setRemoveTypeHeaders(false);
         deserializer.addTrustedPackages("*");
@@ -26,8 +32,8 @@ public class KafkaConsumerConfig {
 
         Map<String, Object> config = new HashMap<>();
 
-        config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
-        config.put(ConsumerConfig.GROUP_ID_CONFIG, "group_one");
+        config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrap);
+        config.put(ConsumerConfig.GROUP_ID_CONFIG, topic);
         config.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         config.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false);
         config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
@@ -37,7 +43,7 @@ public class KafkaConsumerConfig {
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, Round> kafkaListenerContainerFactory(){
+    public ConcurrentKafkaListenerContainerFactory<String, Round> kafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, Round> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         return factory;

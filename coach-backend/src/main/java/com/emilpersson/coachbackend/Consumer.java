@@ -15,9 +15,9 @@ public class Consumer {
 
     private final Logger LOGGER = LoggerFactory.getLogger(Consumer.class);
 
-    @KafkaListener(topics = "coach.topic", groupId = "group_one", containerFactory = "kafkaListenerContainerFactory")
-    public void consumeUserMessage(@Payload Round msg, @Headers MessageHeaders headers) throws IOException {
-        LOGGER.info("Received: {}", msg);
+    @KafkaListener(topics = "#{'${topic.name.consumer}'}", groupId = "group_one", containerFactory = "kafkaListenerContainerFactory")
+    public void consumeUserMessage(@Payload Round round, @Headers MessageHeaders headers) throws IOException {
+        LOGGER.info("Received: {}", round);
     }
 }
 
