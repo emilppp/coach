@@ -3,6 +3,7 @@ package com.emilpersson.coachgateway;
 import com.emilpersson.coachgateway.model.Round;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,6 +26,11 @@ public class Controller {
     @PostMapping(value = "/send")
     public void send(@RequestBody Round round) {
         this.topicProducer.send(round);
+    }
+
+    @KafkaListener
+    public void getUpdates() {
+
     }
 }
 
