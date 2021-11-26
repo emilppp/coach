@@ -1,54 +1,48 @@
 package com.emilpersson.coachbackend.model;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
-@Data
-@Builder
-@Entity
-@Table
-public class Game implements Serializable {
+public class Game {
 
-    @javax.persistence.Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer Id;
-
+    @org.springframework.data.annotation.Id
+    private Long id;
+    @JsonProperty
     private String map;
-    private Date date;
-    @OneToMany(mappedBy="game", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
-    private Set<Round> rounds;
+    private List<Round> rounds;
+    private LocalDate date;
 
-    public Game() {
 
-    }
-
-    public Game(String map) {
+    public Game(Long id, String map, List<Round> rounds, LocalDate date) {
+        this.id = id;
         this.map = map;
-    }
-
-    public Game(Integer id, String map, Date date, Set<Round> rounds) {
-        this.Id = id;
-        this.map = map;
-        this.date = date;
         this.rounds = rounds;
+        this.date = date;
     }
 
-    //private Team teamOne;
-   // private Team teamTwo;
+    public void addRound(Round round) {
+        this.rounds.add(round);
+    }
 
+    public List<Round> getRounds() {
+        return rounds;
+    }
+
+    public String getMap() {
+        return map;
+    }
+
+    public void setMap(String map) {
+        this.map = map;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
 }
