@@ -3,6 +3,8 @@ package com.emilpersson.coachbackend;
 import com.emilpersson.coachbackend.db.GameRepository;
 import com.emilpersson.coachbackend.model.Game;
 import com.emilpersson.coachbackend.model.Round;
+
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +16,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.Optional;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class Controller {
 
@@ -23,7 +26,7 @@ public class Controller {
         this.gameRepository = gameRepository;
     }
 
-    @PostMapping("/{id}/add")
+    @PostMapping("/games/{id}/rounds")
     public Round addRound(@RequestBody Round round, @PathVariable Long id) {
         Optional<Game> game = gameRepository.findById(id);
         game.get().addRound(round);
@@ -32,25 +35,27 @@ public class Controller {
 
     }
 
-    @GetMapping("/{id}/rounds")
+    @GetMapping("/games/{id}/rounds")
     public List<Round> getRounds(@PathVariable Long id) {
         Game game = gameRepository.findById(id).get();
         return game.getRounds();
     }
 
-
-    @PostMapping("/game")
-    public Game createGame(@RequestBody Game game) {
-        var newGame = new Game(null, game.getMap(), null, LocalDate.now());
-        
-        return gameRepository.save(newGame);
-
+    @GetMapping("/games")
+    public Iterable<Game> getGames() {
+        return gameRepository.findAll();
     }
 
-    @GetMapping("/game/{id}")
+    @PostMapping("/games")
+    public Game createGame(@RequestBody Game game) {
+        var newGame = new Game(null, game.getMap(), null, LocalDate.now());
+
+        return gameRepository.save(newGame);
+    }
+
+    @GetMapping("/games/{id}")
     public Game getGame(@PathVariable Long id) {
         return gameRepository.findById(id).get();
     }
-
 
 }
