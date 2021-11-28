@@ -45,4 +45,12 @@ public class Game {
     public void setDate(LocalDate date) {
         this.date = date;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }
