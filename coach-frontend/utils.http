@@ -1,0 +1,15 @@
+POST http://localhost:8080/game
+Content-Type: application/json
+
+{
+    "map": "ascent"
+}
+
+###
+
+GET http://localhost:8080/game/1
+Content-Type: application/json
+
+{
+    "map": "ascent"
+}

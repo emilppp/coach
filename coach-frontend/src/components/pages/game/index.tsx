@@ -2,7 +2,9 @@ import { makeStyles } from '@mui/styles';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { useNavigate } from 'react-router-dom';
-import { Header, Paragraph, Page } from '../..';
+import { Paragraph, Page } from '../..';
+
+const axios = require('axios');
 
 interface Game {
     readonly id: number;
@@ -63,11 +65,17 @@ export const GameListPage = (props: any) => {
 export const GameDetailsPage = (props: any) => {
     const { id } = useParams();
     const [game, setGame] = useState<Game | undefined>(undefined);
-    
+
     useEffect(() => {
-        const newGame: (Game | undefined) = games.find((g: Game) => g.id === Number(id));
-        
-            setGame(newGame);
+            axios.get(`http://localhost:8080/game/${id}`)
+            .then((response: Response)=> {
+                console.log(response);
+                // const newGame: (Game | undefined) = games.find((g: Game) => g.id === Number(id));
+                // setGame(newGame);
+            })
+            .catch((error: any) => {
+                console.log(error);
+            });
     }, []);
 
     if(!game) return <></>;
