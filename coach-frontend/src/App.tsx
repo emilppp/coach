@@ -1,29 +1,32 @@
-import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter } from 'react-router-dom';
 import { Router } from './routes';
+import { createTheme, ThemeProvider } from '@mui/material';
+import { useEffect } from 'react';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#2C363F',
+    },
+    secondary: {
+      main: '#597B86',
+    },
+  },
+  spacing: 8,
+});
 
 function App() {
+    useEffect(() => {
+    document.body.style.backgroundColor = theme.palette.primary.main;
+  }, []);
+
   return (
-    // <div className="App">
-    //   <header className="App-header">
-    //     <img src={logo} className="App-logo" alt="logo" />
-    //     <p>
-    //       Edit <code>src/App.tsx</code> and save to reload.
-    //     </p>
-    //     <a
-    //       className="App-link"
-    //       href="https://reactjs.org"
-    //       target="_blank"
-    //       rel="noopener noreferrer"
-    //     >
-    //       Learn React
-    //     </a>
-    //   </header>
-    // </div>
-    <BrowserRouter>
-      <Router />
-    </BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        <Router />
+      </BrowserRouter>
+    </ThemeProvider> 
   );
 }
 
