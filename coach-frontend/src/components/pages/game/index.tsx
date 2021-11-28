@@ -34,13 +34,17 @@ export const GameListPage = (props: any) => {
 }
 
 export const GameDetailsPage = (props: any) => {
-    const { id: number } = useParams();
-    const [game, setGame] = useState(null);
+    const { id } = useParams();
+    const [game, setGame] = useState<Game | undefined>(undefined);
 
     useEffect(() => {
-        const newGame: { id: number, name: string, date: Date } = games.find(g => g.id === id);
+        const newGame: (Game | undefined) = games.find((g: Game) => g.id === Number(id));
+        
+        if(game) {
+            
+        }
         setGame(newGame);
-    });
+    }, []);
 
     return (
         <div>
