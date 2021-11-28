@@ -71,4 +71,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 ### Coolors theme
 
-[Coolors](https://coolors.co/2c363f-597b86-85c0cc)
+[Coolors](https://coolors.co/181a1c-2c363f-597b86-85c0cc)
