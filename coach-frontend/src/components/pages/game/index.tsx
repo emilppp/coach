@@ -18,17 +18,10 @@ interface Game {
     readonly id: number;
     readonly date: string;
     readonly map: string;
-    rounds: Round[];
+    readonly rounds: Round[];
+    readonly teamOneAgents: string[];
+    readonly teamTwoAgents: string[];
 }
-
-const games: Game[] = [1, 2, 3, 4, 5].map((i: number) => {
-    return {
-        id: i,
-        date: new Date().toDateString(),
-        rounds: [],
-        map: "split",
-    }
-})
 
 const useStyles = makeStyles((theme : any) => ({
         gameCard: {
@@ -109,9 +102,6 @@ export const GameListPage = (props: any) => {
         onClick={() => navigate(`/games/${game.id}`)}
         >
             <Paragraph variant="h5">{game.id}</Paragraph>
-            {/* <Paragraph variant="h6">{game.date}</Paragraph>
-            <Paragraph variant="h7">{game.name}</Paragraph> */}
-            {/* <Link to={`/games/${game.id}`}>View details</Link> */}
         </div>
     })
 
@@ -125,22 +115,11 @@ export const GameListPage = (props: any) => {
     )
 }
 
-const teams = [
-    {
-        name: "Team 1",
-        players: ["yoru", "breach", "sova", "viper", "sage"]
-    },
-    {
-        name: "Team 2",
-        players: ["reyna", "chamber", "omen", "killjoy", "jett"]
-    }
-]
-
 const TeamLayout = (props: any) => {
     const { team } = props;
      const classes = useStyles();
 
-     const playerItems = team.players.map((player: any) => {
+     const playerItems = team.map((player: any) => {
          const image = (agents as any)[player].image;
          const img = require(`../../../res/agents/${image}`);
          return (
@@ -154,7 +133,6 @@ const TeamLayout = (props: any) => {
 
     return (
         <div style={props.style} className={classes.teamOverview}>
-            <Paragraph variant="h4">{team.name.toUpperCase()}</Paragraph>
             <Paragraph variant="h7">Lorem Ipsum</Paragraph>
             <Spacer vertical/>
             <div className={classes.players}>
@@ -198,19 +176,15 @@ export const GameDetailsPage = (props: any) => {
     return (
         <Page>
             <div className={classes.layout}>
-                <Paragraph variant="h6">{`${teams[0].name} v. ${teams[1].name}`}</Paragraph>
+                {/* <Paragraph variant="h6">{`${teams[0].name} v. ${teams[1].name}`}</Paragraph> */}
                 <div className={classes.overview}>
-                    <TeamLayout style={{alignItems: 'flex-end'}} team={teams[0]}/>
+                    <TeamLayout style={{alignItems: 'flex-end'}} team={game.teamOneAgents}/>
                     <img className={classes.minimap} src={map} alt="map thumbnail"/>
-                    <TeamLayout style={{alignItems: 'flex-start'}} team={teams[1]}/>
+                    <TeamLayout style={{alignItems: 'flex-start'}} team={game.teamTwoAgents}/>
                 </div>
                 <Divider horizontal/>
                 <Paragraph variant="h2">Details</Paragraph>
             </div>
-            {/* <Paragraph variant="h6">{game.id}</Paragraph>
-            <Paragraph variant="h3">{game.date}</Paragraph>
-            <Paragraph variant="h3">{game.map}</Paragraph>
-            {roundItems} */}
         </Page>
     )
 }
