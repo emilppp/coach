@@ -1,0 +1,53 @@
+{
+    "astra": {
+        "image": "Astra_icon.png"
+    },
+    "breach": {
+        "image": "Breach_icon.png"
+    },
+    "brimstone": {
+        "image": "Brimstone_icon.png"
+    },
+    "chamber": {
+        "image": "Chamber_icon.png"
+    },
+    "cypher": {
+        "image": "Cypher_icon.png"
+    },
+    "jett": {
+        "image": "Jett_icon.png"
+    },
+    "kayo": {
+        "image": "KAYO_icon.png"
+    },
+    "killjoy": {
+        "image": "Killjoy_icon.png"
+    },
+    "omen": {
+        "image": "Omen_icon.png"
+    },
+    "phoenix": {
+        "image": "Phoenix_icon.png"
+    },
+    "raze": {
+        "image": "Raze_icon.png"
+    },
+    "reyna": {
+        "image": "Reyna_icon.png"
+    },
+    "sage": {
+        "image": "Sage_icon.png"
+    },
+    "skye": {
+        "image": "Skye_icon.png"
+    },
+    "sova": {
+        "image": "Sova_icon.png"
+    },
+    "viper": {
+        "image": "Viper_icon.png"
+    },
+    "yoru": {
+        "image": "Yoru_icon.png"
+    }
+}

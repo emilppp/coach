@@ -2,7 +2,10 @@ import { makeStyles } from '@mui/styles';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import { useNavigate } from 'react-router-dom';
-import { Paragraph, Page } from '../..';
+import { Paragraph, Page, Divider, Spacer} from '../..';
+import mapThumbnail from '../../../res/map_thumbnail.png';
+import agents from '../../../data/agents.json';
+import maps from '../../../data/maps.json';
 
 const axios = require('axios');
 
@@ -23,7 +26,7 @@ const games: Game[] = [1, 2, 3, 4, 5].map((i: number) => {
         id: i,
         date: new Date().toDateString(),
         rounds: [],
-        map: "korv me bröd",
+        map: "split",
     }
 })
 
@@ -40,6 +43,47 @@ const useStyles = makeStyles((theme : any) => ({
         gameList: {
             width: 800,
         },
+        layout: {
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+        },
+        overview: {
+            display: 'flex',
+            flexDirection: 'row',
+            height: 200,
+            marginTop: 25,
+        },
+        teamOverview: {
+            width: 300,
+            display: 'flex',
+            flexDirection: 'column',
+        },
+        minimap: {
+            borderStyle: 'solid',
+            borderWidth: '1px',
+            borderColor: 'white',
+            width: 200,
+            marginLeft: 25,
+            marginRight: 25,
+            backgroundColor: theme.palette.secondary.dark,
+        },
+        players: {
+            display: 'flex',
+            flexDirection: 'row',
+        },
+        player: {
+            borderStyle: 'solid',
+            borderWidth: '1px',
+            borderColor: 'white',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            width: 75,
+            height: 75,
+            backgroundColor: theme.palette.secondary.dark,
+            margin: 3,
+        }
 }));
 
 export const GameListPage = (props: any) => {
@@ -81,10 +125,50 @@ export const GameListPage = (props: any) => {
     )
 }
 
+const teams = [
+    {
+        name: "Team 1",
+        players: ["yoru", "breach", "sova", "viper", "sage"]
+    },
+    {
+        name: "Team 2",
+        players: ["reyna", "chamber", "omen", "killjoy", "jett"]
+    }
+]
+
+const TeamLayout = (props: any) => {
+    const { team } = props;
+     const classes = useStyles();
+
+     const playerItems = team.players.map((player: any) => {
+         const image = (agents as any)[player].image;
+         const img = require(`../../../res/agents/${image}`);
+         return (
+             <div className={classes.player}>
+                <img style={{width: '100%'}} src={img.default} alt="player">
+                </img>
+                {/* <Paragraph variant="body">{player}</Paragraph> */}
+             </div>
+         )
+     })
+
+    return (
+        <div style={props.style} className={classes.teamOverview}>
+            <Paragraph variant="h4">{team.name.toUpperCase()}</Paragraph>
+            <Paragraph variant="h7">Lorem Ipsum</Paragraph>
+            <Spacer vertical/>
+            <div className={classes.players}>
+                {playerItems}
+            </div>
+        </div>
+
+    );
+}
+
 export const GameDetailsPage = (props: any) => {
     const { id } = useParams();
     const [game, setGame] = useState<Game | undefined>(undefined);
-
+    const classes = useStyles();
     useEffect(() => {
             axios.get(`http://localhost:8080/games/${id}`)
             .then((response: any)=> {
@@ -98,19 +182,35 @@ export const GameDetailsPage = (props: any) => {
 
     if(!game) return <></>;
 
-
     const roundItems = game.rounds.map(round => {
         return (
             <Paragraph variant="h6">{`Round ${round.round} - ${round.description}`}</Paragraph>
         )
     })
 
+    var map = mapThumbnail;
+    if(game.map) {
+        const mapImage = (maps as any)[game.map].image;
+        map = require(`../../../res/maps/${mapImage}`).default;
+    }
+
+
     return (
         <Page>
-            <Paragraph variant="h6">{game.id}</Paragraph>
+            <div className={classes.layout}>
+                <Paragraph variant="h6">{`${teams[0].name} v. ${teams[1].name}`}</Paragraph>
+                <div className={classes.overview}>
+                    <TeamLayout style={{alignItems: 'flex-end'}} team={teams[0]}/>
+                    <img className={classes.minimap} src={map} alt="map thumbnail"/>
+                    <TeamLayout style={{alignItems: 'flex-start'}} team={teams[1]}/>
+                </div>
+                <Divider horizontal/>
+                <Paragraph variant="h2">Details</Paragraph>
+            </div>
+            {/* <Paragraph variant="h6">{game.id}</Paragraph>
             <Paragraph variant="h3">{game.date}</Paragraph>
             <Paragraph variant="h3">{game.map}</Paragraph>
-            {roundItems}
+            {roundItems} */}
         </Page>
     )
 }
