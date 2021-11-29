@@ -2,12 +2,14 @@ import React from 'react';
 import { makeStyles } from '@mui/styles';
 import { Typography } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
+import logo from '../res/logo.png';
 
 const useStyles = makeStyles((theme : any) => ({
         page: {
             height: '100vh',
             width: '100vw',
             overflow: 'hidden',
+            background: 'linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(68,68,94,0) 57%, rgba(148,170,191,0) 100%)'
             // padding: theme.spacing(1),
         },
         content: {
@@ -16,14 +18,15 @@ const useStyles = makeStyles((theme : any) => ({
         },
         typography: {
             color: 'white',
+            userSelect: 'none',
         },
         header: {
-            height: 50,
+            height: 30,
             marginBottom: 25,
             paddingBottom: 15,
             display: 'flex',
             flexDirection: 'row',
-            alignItems: 'flex-end',
+            alignItems: 'center',
             backgroundColor: theme.palette.secondary.dark,
             padding: theme.spacing(3),
         },
@@ -47,6 +50,14 @@ const useStyles = makeStyles((theme : any) => ({
         panel: {
             display: 'flex',
             flexDirection: 'column',
+        },
+        divider: {
+            backgroundColor: 'white',
+            margin: 25,
+        },
+        logo: {
+            marginRight: 15,
+            width: 24,
         }
 }));
 
@@ -96,7 +107,8 @@ export const Header = (props: any) => {
 
     return (
         <div className={classes.header}>
-            <Paragraph variant="h4">COACH</Paragraph>
+            <img className={classes.logo} src={logo} alt="logo"/>
+            <Paragraph variant="h5">COACH</Paragraph>
             <Spacer horizontal/>
             <Paragraph variant="h6">Sign in</Paragraph>
             <Paragraph variant="h6" style={{marginLeft: 25}} >Register</Paragraph>
@@ -120,5 +132,13 @@ export const Panel = (props: any) => {
         <div style={props.style} className={classes.panel}>
             {props.children}
         </div>
+    )
+}
+
+export const Divider = (props: any) => {
+    const classes = useStyles();
+
+    return (
+        <div style={{...props.style, ...(props.horizontal? {width: '50%', height: '1px'}: {height: '50%', width: '1px'})}} className={classes.divider}/>
     )
 }

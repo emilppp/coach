@@ -1,0 +1,23 @@
+{
+    "ascent": {
+        "image": "Ascent_minimap.png"
+    },
+    "bind": {
+        "image": "Bind_minimap.png"
+    },
+    "breeze": {
+        "image": "Breeze_minimap.png"
+    },
+    "fracture": {
+        "image": "Fracture_minimap.png"
+    },
+    "haven": {
+        "image": "Haven_minimap.png"
+    },
+    "icebox": {
+        "image": "Icebox_minimap.png"
+    },
+    "split": {
+        "image": "Split_minimap.png"
+    }
+}
