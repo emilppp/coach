@@ -48,7 +48,7 @@ public class Controller {
 
     @PostMapping("/games")
     public Game createGame(@RequestBody Game game) {
-        var newGame = new Game(null, game.getMap(), null, LocalDate.now());
+        var newGame = new Game(null, game.getMap(), null, LocalDate.now(), game.getTeamOneAgents(), game.getTeamTwoAgents());
 
         return gameRepository.save(newGame);
     }

@@ -3,7 +3,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 
 public class Game {
 
@@ -12,14 +11,20 @@ public class Game {
     @JsonProperty
     private String map;
     private List<Round> rounds;
+    @JsonProperty
+    private List<String> teamOneAgents;
+    @JsonProperty
+    private List<String> teamTwoAgents;
     private LocalDate date;
 
 
-    public Game(Long id, String map, List<Round> rounds, LocalDate date) {
+    public Game(Long id, String map, List<Round> rounds, LocalDate date, List<String> teamOneAgents, List<String> teamTwoAgents) {
         this.id = id;
         this.map = map;
         this.rounds = rounds;
         this.date = date;
+        this.teamOneAgents = teamOneAgents;
+        this.teamTwoAgents = teamTwoAgents;
     }
 
     public void addRound(Round round) {
@@ -52,5 +57,21 @@ public class Game {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public void setTeamOneAgents(List<String> teamOneAgents) {
+        this.teamOneAgents = teamOneAgents;
+    }
+
+    public void setTeamTwoAgents(List<String> teamTwoAgents) {
+        this.teamTwoAgents = teamTwoAgents;
+    }
+
+    public List<String> getTeamOneAgents() {
+        return this.teamOneAgents;
+    }
+
+    public List<String> getTeamTwoAgents() {
+        return this.teamTwoAgents;
     }
 }
